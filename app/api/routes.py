@@ -108,7 +108,10 @@ def submit_agent():
     if file.filename == '':
         return jsonify({"error": "No file selected"}), 400
     
-    if not file.filename.endswith('.zip'):
+    if not file or not file.filename:
+        return jsonify({"error": "No file selected"}), 400
+
+    if not file.filename.lower().endswith('.zip'):
         return jsonify({"error": "Only ZIP files are supported"}), 400
     
     # Save file temporarily
